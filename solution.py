@@ -1,4 +1,8 @@
+import re
+
+
 class Solution:
+    # Roman numbers and their Arabic counterparts used in conversion
     NUMBERS_R2A = {
         'M': 1000,
         'CM': 900,
@@ -15,22 +19,27 @@ class Solution:
         'I': 1
     }
 
-    VALID_SYMBOLS = 'IVXLCDM'
-
     def romanToInt(self, s: str) -> int:
+        """
+        Return an Arabic number equal to Roman one.
+
+        s: str - Roman number in range from I to MMMCMXCIX (from 1 to 3999)
+
+        Raise TypeError if 's' is not a str.
+
+        Raise ValueError if 's' is not a valid Roman number.
+        """
         if not isinstance(s, str):
             raise TypeError("Argument must have type 'str'")
-
-        if not 1 <= len(s) <= 15:
-            raise ValueError("String must have length in range from 1 to 15 symbols")
 
         s = s.upper()
 
         if not self._is_valid(s):
-            raise ValueError(f"String must only consist of symbols '{self.VALID_SYMBOLS}'")
+            raise ValueError(f"String must be a valid Roman number from I to MMMCMXCIX (from 1 to 3999)")
 
         result = 0
         i = 0
+        # Iterating from higher number to lower numbers
         for roman, arabic in self.NUMBERS_R2A.items():
             while True:
                 if s.find(roman, i, i+len(roman)) == -1:
@@ -46,24 +55,35 @@ class Solution:
 
     @classmethod
     def _is_valid(cls, s: str) -> bool:
-        # TODO: Check for valid sequences
-        valid = True
-        for symbol in s:
-            if symbol not in cls.VALID_SYMBOLS:
-                valid = False
-                break
-        return valid
+        """
+        Return True if 's' is a valid Roman number,
+        return False otherwise.
+        """
+        # 15 is max possible length of Roman number in range from 1 to 3999
+        if not 1 <= len(s) <= 15:
+            return False
+
+        # regexp from https://www.oreilly.com/library/view/regular-expressions-cookbook/9780596802837/ch06s09.html
+        re_result = re.fullmatch(r'^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$', s)
+        if re_result:
+            return True
+        return False
 
 
 if __name__ == '__main__':
     tests = [
+        # ('', None),       # Raises ValueError
+        # ('a', None),      # Raises ValueError
+        # (1, None),        # Raises TypeError
+        # ('IIII', None),   # Raises ValueError
         ('I', 1),
         ('III', 3),
         ('IV', 4),
         ('IX', 9),
         ('LVIII', 58),
         ('MCMXCIV', 1994),
-        ('MMMCMXCIX', 3999)
+        ('MMMDCCCLXXXVIII', 3888),
+        ('MMMCMXCIX', 3999),
     ]
 
     solution = Solution()
