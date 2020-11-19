@@ -39,7 +39,7 @@ class Solution:
 
         result = 0
         i = 0
-        # Iterating from higher number to lower numbers
+        # Iterating from higher numbers to lower numbers
         for roman, arabic in self.NUMBERS_R2A.items():
             while True:
                 if s.find(roman, i, i+len(roman)) == -1:
