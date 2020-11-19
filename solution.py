@@ -1,5 +1,5 @@
 class Solution:
-    NUMERALS_R2A = {
+    NUMBERS_R2A = {
         'M': 1000,
         'CM': 900,
         'D': 500,
@@ -31,7 +31,7 @@ class Solution:
 
         result = 0
         i = 0
-        for roman, arabic in self.NUMERALS_R2A.items():
+        for roman, arabic in self.NUMBERS_R2A.items():
             while True:
                 if s.find(roman, i, i+len(roman)) == -1:
                     break
