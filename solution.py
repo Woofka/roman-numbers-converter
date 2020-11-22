@@ -53,8 +53,8 @@ class Solution:
 
         return result
 
-    @classmethod
-    def _is_valid(cls, s: str) -> bool:
+    @staticmethod
+    def _is_valid(s: str) -> bool:
         """
         Return True if 's' is a valid Roman number,
         return False otherwise.
