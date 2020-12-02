@@ -1,5 +1,5 @@
 import sys
-from solution import Solution
+from RomanNumbersConverter import Converter
 
 
 def main():
@@ -8,9 +8,8 @@ def main():
         return
 
     number = sys.argv[1]
-    solution = Solution()
     try:
-        print(solution.romanToInt(number))
+        print(Converter.roman_to_int(number))
     except Exception:
         print('Wrong argument. Only Roman numbers from I to MMMCMXCIX (from 1 to 3999) are accepted for conversion')
 

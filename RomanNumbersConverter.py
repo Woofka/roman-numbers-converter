@@ -1,9 +1,9 @@
 import re
 
 
-class Solution:
+class Converter:
     # Roman numbers and their Arabic counterparts used in conversion
-    NUMBERS_R2A = {
+    _NUMBERS_R2A = {
         'M': 1000,
         'CM': 900,
         'D': 500,
@@ -19,7 +19,8 @@ class Solution:
         'I': 1
     }
 
-    def romanToInt(self, s: str) -> int:
+    @classmethod
+    def roman_to_int(cls, s: str) -> int:
         """
         Return an Arabic number equal to Roman one.
 
@@ -34,13 +35,13 @@ class Solution:
 
         s = s.upper()
 
-        if not self._is_valid(s):
+        if not cls._is_valid(s):
             raise ValueError(f"String must be a valid Roman number from I to MMMCMXCIX (from 1 to 3999)")
 
         result = 0
         i = 0
         # Iterating from higher numbers to lower numbers
-        for roman, arabic in self.NUMBERS_R2A.items():
+        for roman, arabic in cls._NUMBERS_R2A.items():
             while True:
                 if s.find(roman, i, i+len(roman)) == -1:
                     break
@@ -86,9 +87,8 @@ if __name__ == '__main__':
         ('MMMCMXCIX', 3999),
     ]
 
-    solution = Solution()
     for test, expected_result in tests:
-        returned_result = solution.romanToInt(test)
+        returned_result = Converter.roman_to_int(test)
         if returned_result == expected_result:
             status = 'PASS'
         else:
